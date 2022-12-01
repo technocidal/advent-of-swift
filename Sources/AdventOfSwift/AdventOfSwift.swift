@@ -64,6 +64,32 @@ struct Leaderboard: AsyncParsableCommand {
 
 struct First: AsyncParsableCommand {
     
-    func run() async throws {}
+    func run() async throws {
+        let counts = try await getInput(.init(day: 1, year: 2022))
+            .components(separatedBy: .newlines)
+            .reduce(into: [[]]) { partialResult, input in
+                if input.isEmpty {
+                    partialResult.append([String]())
+                } else {
+                    partialResult[partialResult.count - 1].append(input)
+                }
+            }
+            .reduce(into: []) { partialResult, input in
+                partialResult.append(
+                    input
+                        .compactMap{ Int($0) }
+                        .reduce(into: 0) { $0 += $1 }
+                )
+            }
+        
+        print("The top elf is carrying \(counts.max() ?? 0) calories.")
+        
+        let lastThree = counts
+            .sorted()
+            .suffix(3)
+            .reduce(into: 0) { $0 += $1 }
+
+        print("The top three elves are carrying \(lastThree) calories.")
+    }
 }
 
