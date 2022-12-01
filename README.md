@@ -73,6 +73,31 @@ static var configuration = CommandConfiguration(
 Now you can run `swift run aoswift second` to 
 test your implementation. 
 
+## How does the leaderboard work?
+
+Set the environment variable `AOC_LEADERBOARD` to a
+private leaderboard token. 
+
+### Current Standings
+
+```swift
+swift run aoswift leaderboard
+```
+
+By default this will print the current Top 10 by their local score 
+on the specified leaderboard.
+
+You can customize this behavior by providing a number of results.
+
+```swift
+// Get results for the first 5 members
+swift run aoswift leaderboard --number-of-results 5
+
+// Get results for all members
+swift run aoswift leaderboard --number-of-results all
+```
+
 ## Todo
 
+[X] Leaderboard support  
 [] Linux Support
